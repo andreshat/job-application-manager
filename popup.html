@@ -2,40 +2,44 @@
 <html>
 <head>
   <title>Job Application Manager</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { font-family: Arial, sans-serif; }
-    h1 { font-size: 20px; }
     .hidden { display: none; }
     .view-container { margin-top: 20px; }
     .file-input-container {
       margin-bottom: 10px;
     }
+    .no-files { color: red; }
   </style>
 </head>
 <body>
-  <h1>Job Application Manager</h1>
-  <div id="uploadView" class="view-container">
-    <form id="uploadForm">
-      <div class="file-input-container">
-        <label for="cv">CV: <span id="cvFileName">[Choose file]</span></label>
-        <input type="file" id="cv" name="cv" required><br><br>
-      </div>
-      <div class="file-input-container">
-        <label for="transcripts">Transcripts: <span id="transcriptsFileName">[Choose file]</span></label>
-        <input type="file" id="transcripts" name="transcripts"><br><br>
-      </div>
-      <div class="file-input-container">
-        <label for="workPermit">Work Permit: <span id="workPermitFileName">[Choose file]</span></label>
-        <input type="file" id="workPermit" name="workPermit"><br><br>
-      </div>
-      <button type="submit">Upload Files</button>
-    </form>
-    <button id="switchToView">View Uploaded Files</button>
-  </div>
-  <div id="viewFiles" class="view-container hidden">
-    <h2>Uploaded Files</h2>
-    <div class="file-list" id="fileList"></div>
-    <button id="switchToUpload">Go Back to Upload</button>
+  <div class="container">
+    <h1 class="mt-3">Job Application Manager</h1>
+    <div id="viewFiles" class="view-container">
+      <h2>Uploaded Files</h2>
+      <div class="file-list" id="fileList"></div>
+      <p id="noFilesMessage" class="no-files"></p>
+      <button id="switchToUpload" class="btn btn-primary mt-3">Upload Files</button>
+    </div>
+    <div id="uploadView" class="view-container hidden">
+      <form id="uploadForm" class="mt-3">
+        <div class="file-input-container">
+          <label for="cv">CV: <span id="cvFileName">[Choose file]</span></label>
+          <input type="file" id="cv" name="cv" class="form-control" required><br>
+        </div>
+        <div class="file-input-container">
+          <label for="transcripts">Transcripts: <span id="transcriptsFileName">[Choose file]</span></label>
+          <input type="file" id="transcripts" name="transcripts" class="form-control"><br>
+        </div>
+        <div class="file-input-container">
+          <label for="workPermit">Work Permit: <span id="workPermitFileName">[Choose file]</span></label>
+          <input type="file" id="workPermit" name="workPermit" class="form-control"><br>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Files</button>
+      </form>
+      <button id="switchToView" class="btn btn-secondary mt-3">View Uploaded Files</button>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

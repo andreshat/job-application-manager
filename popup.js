@@ -4,6 +4,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const switchToView = document.getElementById('switchToView');
     const switchToUpload = document.getElementById('switchToUpload');
     const fileList = document.getElementById('fileList');
+    const noFilesMessage = document.getElementById('noFilesMessage');
+  
+    // Display uploaded files by default
+    populateFileList();
+  
+    // Switch to view uploaded files
+    switchToView.addEventListener('click', function() {
+      populateFileList();
+      uploadView.classList.add('hidden');
+      viewFiles.classList.remove('hidden');
+    });
+  
+    // Switch back to upload form
+    switchToUpload.addEventListener('click', function() {
+      viewFiles.classList.add('hidden');
+      uploadView.classList.remove('hidden');
+    });
   
     // Update file name display
     document.getElementById('cv').addEventListener('change', function() {
@@ -19,19 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('workPermit').addEventListener('change', function() {
       const fileName = this.files[0] ? this.files[0].name : '[Choose file]';
       document.getElementById('workPermitFileName').textContent = fileName;
-    });
-  
-    // Switch to view uploaded files
-    switchToView.addEventListener('click', function() {
-      populateFileList();
-      uploadView.classList.add('hidden');
-      viewFiles.classList.remove('hidden');
-    });
-  
-    // Switch back to upload form
-    switchToUpload.addEventListener('click', function() {
-      viewFiles.classList.add('hidden');
-      uploadView.classList.remove('hidden');
     });
   
     // Handle file upload
@@ -80,6 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateFileList() {
       chrome.storage.local.get(['cv', 'transcripts', 'workPermit'], function(items) {
         fileList.innerHTML = ''; // Clear the existing list
+        let hasFiles = false;
+  
         if (items.cv) {
           const cvLink = document.createElement('a');
           cvLink.href = items.cv;
@@ -87,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
           cvLink.download = 'cv';
           fileList.appendChild(cvLink);
           fileList.appendChild(document.createElement('br'));
+          hasFiles = true;
         }
   
         if (items.transcripts) {
@@ -96,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
           transcriptsLink.download = 'transcripts';
           fileList.appendChild(transcriptsLink);
           fileList.appendChild(document.createElement('br'));
+          hasFiles = true;
         }
   
         if (items.workPermit) {
@@ -105,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
           workPermitLink.download = 'workPermit';
           fileList.appendChild(workPermitLink);
           fileList.appendChild(document.createElement('br'));
+          hasFiles = true;
+        }
+  
+        if (!hasFiles) {
+          noFilesMessage.textContent = 'No files uploaded. Please upload all the necessary files.';
+        } else {
+          noFilesMessage.textContent = '';
         }
       });
     }

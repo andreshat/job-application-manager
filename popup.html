@@ -11,6 +11,18 @@
       margin-bottom: 10px;
     }
     .no-files { color: red; }
+    .file-list a {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .file-list a:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .file-info {
+      font-size: 0.9em;
+      color: gray;
+    }
   </style>
 </head>
 <body>
@@ -26,7 +38,7 @@
       <form id="uploadForm" class="mt-3">
         <div class="file-input-container">
           <label for="cv">CV: <span id="cvFileName">[Choose file]</span></label>
-          <input type="file" id="cv" name="cv" class="form-control" required><br>
+          <input type="file" id="cv" name="cv" class="form-control"><br>
         </div>
         <div class="file-input-container">
           <label for="transcripts">Transcripts: <span id="transcriptsFileName">[Choose file]</span></label>

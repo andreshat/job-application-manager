@@ -1,0 +1,37 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .view-container {
+    margin-top: 20px;
+  }
+  
+  .file-input-container {
+    margin-bottom: 10px;
+  }
+  
+  .no-files {
+    color: red;
+  }
+  
+  .file-list a {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .file-list a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .file-info {
+    font-size: 0.9em;
+    color: gray;
+  }
+  

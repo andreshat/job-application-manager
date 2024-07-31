@@ -97,41 +97,17 @@ document.addEventListener('DOMContentLoaded', function() {
         let hasFiles = false;
   
         if (items.cv) {
-          const cvLink = document.createElement('a');
-          cvLink.href = items.cv.data;
-          cvLink.textContent = 'CV';
-          cvLink.download = 'cv';
-          cvLink.title = items.cv.name;
-          cvLink.target = '_blank';
-          cvLink.classList.add('d-block');
-          cvLink.innerHTML += ` <span class="file-info">(latest update: ${items.cv.date})</span>`;
-          fileList.appendChild(cvLink);
+          createFileLink(items.cv, 'CV');
           hasFiles = true;
         }
   
         if (items.transcripts) {
-          const transcriptsLink = document.createElement('a');
-          transcriptsLink.href = items.transcripts.data;
-          transcriptsLink.textContent = 'Transcripts';
-          transcriptsLink.download = 'transcripts';
-          transcriptsLink.title = items.transcripts.name;
-          transcriptsLink.target = '_blank';
-          transcriptsLink.classList.add('d-block');
-          transcriptsLink.innerHTML += ` <span class="file-info">(latest update: ${items.transcripts.date})</span>`;
-          fileList.appendChild(transcriptsLink);
+          createFileLink(items.transcripts, 'Transcripts');
           hasFiles = true;
         }
   
         if (items.workPermit) {
-          const workPermitLink = document.createElement('a');
-          workPermitLink.href = items.workPermit.data;
-          workPermitLink.textContent = 'Work Permit';
-          workPermitLink.download = 'workPermit';
-          workPermitLink.title = items.workPermit.name;
-          workPermitLink.target = '_blank';
-          workPermitLink.classList.add('d-block');
-          workPermitLink.innerHTML += ` <span class="file-info">(latest update: ${items.workPermit.date})</span>`;
-          fileList.appendChild(workPermitLink);
+          createFileLink(items.workPermit, 'Work Permit');
           hasFiles = true;
         }
   
@@ -141,6 +117,39 @@ document.addEventListener('DOMContentLoaded', function() {
           noFilesMessage.textContent = '';
         }
       });
+    }
+  
+    // Create a file link
+    function createFileLink(fileItem, displayName) {
+      const blob = dataURLToBlob(fileItem.data);
+      const blobUrl = URL.createObjectURL(blob);
+  
+      const fileLink = document.createElement('a');
+      fileLink.href = blobUrl;
+      fileLink.textContent = displayName;
+      fileLink.title = fileItem.name;
+      fileLink.target = '_blank';
+      fileLink.classList.add('d-block');
+      fileLink.innerHTML += ` <span class="file-info">(latest update: ${fileItem.date})</span>`;
+      
+      fileLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.open(blobUrl, '_blank');
+      });
+  
+      fileList.appendChild(fileLink);
+    }
+  
+    // Convert a data URL to a Blob
+    function dataURLToBlob(dataURL) {
+      const byteString = atob(dataURL.split(',')[1]);
+      const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: mimeString });
     }
   
     // Pre-fill the form based on previously uploaded files
